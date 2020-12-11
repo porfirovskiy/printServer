@@ -1,0 +1,17 @@
+{
+    "name": "porfirovskiy/print-server",
+    "description": "test project",
+    "type": "project",
+    "authors": [
+        {
+            "name": "porfirovskiy",
+            "email": "porfirovskiy@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+    },
+    "autoload": {
+        "psr-4": { "PrintServer\\": "src"}
+    }
+}
