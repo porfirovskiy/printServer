@@ -3,7 +3,7 @@
 namespace PrintServer;
 
 /**
- * Description of Validator
+ * Class for validating params form request
  *
  * @author porfirovskiy
  */
@@ -14,6 +14,12 @@ class Validator {
     
     protected \stdClass $params;
     
+    /**
+     * Main validation method
+     * 
+     * @param \stdClass $params
+     * @return bool
+     */
     public function validate(\stdClass $params): bool
     {
         $this->setParams($params);
@@ -27,11 +33,22 @@ class Validator {
         return false;
     }
     
+    /**
+     * Setter for params property
+     * 
+     * @param \stdClass $params
+     * @return void
+     */
     protected function setParams(\stdClass $params): void
     {
         $this->params = $params;
     }
     
+    /**
+     * Validate 2 params(time, path)
+     * 
+     * @return bool
+     */
     protected function validateParams(): bool 
     {
         if ($this->isValidPathParam()) {
@@ -43,6 +60,11 @@ class Validator {
         return false;
     }
     
+    /**
+     * Check all params on empty
+     * 
+     * @return bool
+     */
     protected function isNotEmptyParams(): bool 
     {
         if (!empty($this->params->time) && !empty($this->params->message) && !empty($this->params->path)) {
@@ -52,6 +74,11 @@ class Validator {
         return false;
     }
 
+    /**
+     * Validating path param
+     * 
+     * @return bool
+     */
     protected function isValidPathParam(): bool 
     {
         if ($this->params->path == static::PATH_URL) {
@@ -61,6 +88,11 @@ class Validator {
         return false;
     }
     
+    /**
+     * Validating time param
+     * 
+     * @return bool
+     */
     protected function isValidTimeParam(): bool 
     {
         $dateParam = date_create($this->params->time);

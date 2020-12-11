@@ -3,7 +3,7 @@
 namespace PrintServer;
 
 /**
- * Description of QueueHandler
+ * Class for creating tasks in Redis storage
  *
  * @author porfirovskiy
  */
@@ -11,20 +11,25 @@ class QueueHandler {
     
     protected $redis;
     
-    public function __construct() {
-        $this->redis = new \Predis\Client([
-            'password' => 'p/O5d+5Xway6BW8+zAjh7fXicp7xT3cWnjkOdJTEM9l8zUoihLm7LHK9X7cwRQ1zfEKHmBvtqF4pky6E'
-        ]);
+    /**
+     * 
+     * @param \Predis\Client $redis
+     */
+    public function __construct(\Predis\Client $redis) 
+    {
+        $this->redis = $redis;
     }
     
+    /**
+     * Add task to Redis queue
+     * 
+     * @param string $time
+     * @param string $message
+     * @return void
+     */
     public function addTask(string $time, string $message): void
     {
         $this->redis->set($time, $message);
-    }
-    
-    protected function checkDuplicateParams(string $time, string $message): bool
-    {
-        
     }
     
 }

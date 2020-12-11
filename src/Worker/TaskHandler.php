@@ -5,7 +5,7 @@ namespace PrintServer\Worker;
 use Predis\Collection\Iterator;
 
 /**
- * Description of Server
+ * Class for tasks handler
  *
  * @author porfirovskiy
  */
@@ -13,12 +13,19 @@ class TaskHandler {
     
     protected $redis;
     
-    public function __construct() {
-        $this->redis = new \Predis\Client([
-            'password' => 'p/O5d+5Xway6BW8+zAjh7fXicp7xT3cWnjkOdJTEM9l8zUoihLm7LHK9X7cwRQ1zfEKHmBvtqF4pky6E'
-        ]);
+    /**
+     * 
+     * @param \Predis\Client $redis
+     */
+    public function __construct(\Predis\Client $redis) {
+        $this->redis = $redis;
     }
     
+    /**
+     * Run tasks processing from queue
+     * 
+     * @return void
+     */
     public function runProccessing(): void
     {
         while (true) {
@@ -28,6 +35,12 @@ class TaskHandler {
         }
     }
     
+    /**
+     * Check if time params is right
+     * 
+     * @param string $recordTime
+     * @return bool
+     */
     protected function isTheTimeRight(string $recordTime): bool
     {
         if($recordTime <= date('Y-m-d H:i:s')) { 
@@ -37,6 +50,12 @@ class TaskHandler {
         return false;
     }
     
+    /**
+     * Print time message into console
+     * 
+     * @param string $key
+     * @return void
+     */
     protected function outputIntoConsole(string $key): void
     {
         if($this->isTheTimeRight($key)) { 
@@ -46,4 +65,5 @@ class TaskHandler {
             sleep(1);
         }
     }
+    
 }

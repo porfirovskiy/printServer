@@ -3,7 +3,7 @@
 namespace PrintServer;
 
 /**
- * Description of RequestHandler
+ * Class for proccessing requests from clients
  *
  * @author porfirovskiy
  */
@@ -15,11 +15,20 @@ class RequestHandler implements RequestHandlerInterface {
     protected \stdClass $paramsObject; /* create DTO for validator */
     protected Validator $validator;
 
+    /**
+     * 
+     * @param Validator $validator
+     */
     public function __construct(Validator $validator)
     {
         $this->validator = $validator;
     }
     
+    /**
+     * Check request proccessing result
+     * 
+     * @return bool
+     */
     public function isSuccessfulProcessed(): bool
     {
         $this->setParams();
@@ -32,6 +41,11 @@ class RequestHandler implements RequestHandlerInterface {
         return false;
     }
     
+    /**
+     * Set DTO object for Validator
+     * 
+     * @return void
+     */
     protected function setParamsObject(): void
     {
         $this->paramsObject = new \stdClass();
@@ -40,6 +54,11 @@ class RequestHandler implements RequestHandlerInterface {
         $this->paramsObject->message = $this->message;
     }
     
+    /**
+     * Get params from GET request
+     * 
+     * @return array
+     */
     protected function getParamsFromRequest(): array
     {
         $url = $_SERVER[REQUEST_URI]; 
@@ -58,6 +77,11 @@ class RequestHandler implements RequestHandlerInterface {
         ];
     }
     
+    /**
+     * Set params from request params
+     *  
+     * @return void
+     */
     protected function setParams(): void
     {
         $params = $this->getParamsFromRequest();
@@ -67,28 +91,57 @@ class RequestHandler implements RequestHandlerInterface {
         $this->setMessageParam($params['message']);
     }
 
+    /**
+     * Setter for time property
+     * 
+     * @param string $time
+     * @return void
+     */
     protected function setTimeParam(string $time): void
     {
         $this->time = $time;
     }
     
+    /**
+     * Setter for path property
+     * 
+     * @param string $path
+     * @return void
+     */
     protected function setPathParam(string $path): void
     {
         $this->path = $path;
     }
     
+    /**
+     * Setter for message property
+     * 
+     * @param string $message
+     * @return void
+     */
     protected function setMessageParam(string $message): void
     {
         $this->message = $message;
     }
     
+    /**
+     * Getter for time property
+     * 
+     * @return string
+     */
     public function getTimeParam(): string
     {
         return $this->time;
     }
     
+    /**
+     * Getter for message property
+     *  
+     * @return string
+     */
     public function getMessageParam(): string
     {
         return $this->message;
     }
+    
 }
