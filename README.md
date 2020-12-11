@@ -10,8 +10,8 @@ php -S localhost:8000 -t public/
 ```
 3. For add your messages on server, make GET request.
 Example:
-```sh
-http://localhost:8000/printMeAt?time=2020-12-11%20120:35:00&message=new%20message%203
+```js
+http://localhost:8000/printMeAt?time=2020-12-11 120:35:00&message=new message 32
 ```
 4. Launch worker:
 ```sh
