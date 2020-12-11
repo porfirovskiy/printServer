@@ -7,19 +7,19 @@ namespace PrintServer;
  *
  * @author porfirovskiy
  */
-class RequestHandler implements RequestHandlerInterface {
+class RequestHandler {
     
     protected string $time;
     protected string $message;
     
-    public function processing(): void
+    public function isSuccessfulProcessed(): bool
     {
         $this->setParams();
         if ($this->validParams()) {
-            echo 'ok :)';
-        } else {
-            echo 'no ok!';
+            return true;
         }
+        
+        return false;
     }
     
     protected function getParamsFromRequest(): array
@@ -36,7 +36,7 @@ class RequestHandler implements RequestHandlerInterface {
     protected function setParams(): void
     {
         $params = $this->getParamsFromRequest();
-        echo '<pre>';var_dump($params);
+        //echo '<pre>';var_dump($params);
         
         $this->setTimeParam($params['time']);
         $this->setMessageParam($params['message']);

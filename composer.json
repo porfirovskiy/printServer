@@ -10,6 +10,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
+        "predis/predis": "2.0.x-dev"
     },
     "autoload": {
         "psr-4": { "PrintServer\\": "src"}
