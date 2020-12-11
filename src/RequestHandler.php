@@ -7,27 +7,52 @@ namespace PrintServer;
  *
  * @author porfirovskiy
  */
-class RequestHandler {
+class RequestHandler implements RequestHandlerInterface {
     
+    protected string $path;
     protected string $time;
     protected string $message;
+    protected \stdClass $paramsObject; /* create DTO for validator */
+    protected Validator $validator;
+
+    public function __construct(Validator $validator)
+    {
+        $this->validator = $validator;
+    }
     
     public function isSuccessfulProcessed(): bool
     {
         $this->setParams();
-        if ($this->validParams()) {
+        $this->setParamsObject();
+        
+        if ($this->validator->validate($this->paramsObject)) {
             return true;
         }
         
         return false;
     }
     
+    protected function setParamsObject(): void
+    {
+        $this->paramsObject = new \stdClass();
+        $this->paramsObject->path = $this->path;
+        $this->paramsObject->time = $this->time;
+        $this->paramsObject->message = $this->message;
+    }
+    
     protected function getParamsFromRequest(): array
     {
-        $time = isset($_GET['time']) ? htmlspecialchars($_GET['time']) : '';
-        $message = isset($_GET['message']) ? htmlspecialchars($_GET['message']) : '';
+        $url = $_SERVER[REQUEST_URI]; 
+        $urlData = parse_url($url);
+        
+        parse_str($urlData['query'], $params);
+        
+        $path = isset($urlData['path']) ? $urlData['path'] : '';
+        $time = isset($params['time']) ? htmlspecialchars($params['time']) : '';
+        $message = isset($params['message']) ? htmlspecialchars($params['message']) : '';
         
         return [
+            'path' => $path,
             'time' => $time,
             'message' => $message
         ];
@@ -36,24 +61,20 @@ class RequestHandler {
     protected function setParams(): void
     {
         $params = $this->getParamsFromRequest();
-        //echo '<pre>';var_dump($params);
-        
+
+        $this->setPathParam($params['path']);
         $this->setTimeParam($params['time']);
         $this->setMessageParam($params['message']);
     }
 
-    protected function validParams(): bool
-    {        
-        if (empty($this->time) || empty($this->message)) {
-            return false;
-        }
-        
-        return true;
-    }
-    
     protected function setTimeParam(string $time): void
     {
         $this->time = $time;
+    }
+    
+    protected function setPathParam(string $path): void
+    {
+        $this->path = $path;
     }
     
     protected function setMessageParam(string $message): void

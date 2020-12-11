@@ -7,9 +7,7 @@ namespace PrintServer;
  * @author porfirovskiy
  */
 interface RequestHandlerInterface {
-    
-    public function getParamsFromRequest(): array;
-    public function setParams(): void;
-    public function validParams(): bool;
-    
+    public function isSuccessfulProcessed(): bool;
+    public function getTimeParam(): string;
+    public function getMessageParam(): string;
 }
