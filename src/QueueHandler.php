@@ -19,7 +19,7 @@ class QueueHandler {
     
     public function addTask(string $time, string $message): void
     {
-        $this->redis->set('yu23', '--13-');
+        $this->redis->set($time, $message);
     }
     
     protected function checkDuplicateParams(string $time, string $message): bool

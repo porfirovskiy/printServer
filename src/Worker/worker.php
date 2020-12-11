@@ -8,4 +8,4 @@ use PrintServer\Worker\TaskHandler;
 
 
 $taskHandler = new TaskHandler();
-$taskHandler->proccessing();
+$taskHandler->runProccessing();

@@ -10,7 +10,7 @@ use PrintServer\QueueHandler;
 $request = new RequestHandler();
 if ($request->isSuccessfulProcessed()) {
     $queueHandler = new QueueHandler();
-    $queueHandler->addTask('12:00', 'it`s work fine!');
+    $queueHandler->addTask($request->getTimeParam(), $request->getMessageParam());
     echo 'Work well!';
 } else {
     echo 'Invalid GET params recived!';

@@ -2,6 +2,8 @@
 
 namespace PrintServer\Worker;
 
+use Predis\Collection\Iterator;
+
 /**
  * Description of Server
  *
@@ -17,23 +19,31 @@ class TaskHandler {
         ]);
     }
     
-    public function proccessing(): void
+    public function runProccessing(): void
     {
         while (true) {
-            //try {
-                
-                $data = $this->redis->get('yu23');
-                
-                sleep(1);
-                
-                echo $data;
-                //$ret = $redisQueue->remove($data);
-
-            /*} catch (RedisQueueException $e) {
-                echo $e->getMessage();
-
-            }*/
+            foreach (new Iterator\Keyspace($this->redis, "*") as $key) {
+                $this->outputIntoConsole($key);
+            }
         }
     }
     
+    protected function isTheTimeRight(string $recordTime): bool
+    {
+        if($recordTime <= date('Y-m-d H:i:s')) { 
+                return true;
+        }
+        
+        return false;
+    }
+    
+    protected function outputIntoConsole(string $key): void
+    {
+        if($this->isTheTimeRight($key)) { 
+            $message = $this->redis->get($key);
+            echo $key . " - " . $message . "\n";
+            $this->redis->del($key);
+            sleep(1);
+        }
+    }
 }
