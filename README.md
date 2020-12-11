@@ -3,7 +3,7 @@ Test project.
 
 How to use local:
 
-1. Move to project root directory(onle level with vendor and src dir)
+1. Move to project root directory(one level with vendor and src dir)
 2. Start php server:
 ```sh
 php -S localhost:8000 -t public/
