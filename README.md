@@ -3,9 +3,9 @@ Test project with Redis storage.
 
 How to use local:
 
-1. Move to project root directory(one level with vendor and src dir)
+1. git clone https://github.com/porfirovskiy/printServer.git
 
-2. git clone https://github.com/porfirovskiy/printServer.git
+2. Move to project root directory(one level with vendor and src dir)
 
 3. composer install
 
