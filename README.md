@@ -2,9 +2,11 @@
 Test project with Redis storage.
 
 Requirements:
-You must have installed on your local pc Redis server(working on standart port 6379)
+
+1. You must have installed on your local pc Redis server(working on standart port 6379)
 and php extension(php-redis).
-In file public/index.php set your own password(it is a password for your local Redis server) for Redis client(\Predis\Client).
+
+2. In file public/index.php set your own password(it is a password for your local Redis server) for Redis client(\Predis\Client).
 
 
 How to use local:
