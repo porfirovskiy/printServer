@@ -7,6 +7,7 @@ Requirements:
 and php extension(php-redis).
 
 2. In file public/index.php set your own password(it is a password for your local Redis server) for Redis client(\Predis\Client).
+   And the same thing for in file src/Worker/worker.php
 
 
 How to use local:
